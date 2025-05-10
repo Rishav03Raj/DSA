@@ -1,32 +1,30 @@
 class Solution {
 public:
     int myAtoi(string s) {
-        int n=s.length();
-        int i=0,a=1;
-        string st = "";
-        long long b ;
-        while(s[i]==' ') i++;
-        if(s[i]=='-'){ a*=-1;i++;}
-        else if(s[i]=='+') i++;
-        while(s[i]=='0') i++;
-        for(i;i<n;i++){
-            if(isdigit(s[i])) st+=s[i];
-            else break;
+        int i = 0, n = s.size(), sign = 1;
+        long long result = 0;
+
+        // 1. Skip leading whitespaces
+        while (i < n && s[i] == ' ') i++;
+
+        // 2. Handle optional sign
+        if (i < n && (s[i] == '+' || s[i] == '-')) {
+            sign = (s[i] == '-') ? -1 : 1;
+            i++;
         }
 
-        if (st.empty()) return 0;
+        // 3. Convert digits and avoid overflow
+        while (i < n && isdigit(s[i])) {
+            int digit = s[i] - '0';
+            result = result * 10 + digit;
 
-          try {
-        b = stoll(st);
-    } catch (...) {
-        // In case it still overflows (just for safety)
-        return (a == 1) ? INT_MAX : INT_MIN;
+            // 4. Check overflow after each step
+            if (sign == 1 && result > INT_MAX) return INT_MAX;
+            if (sign == -1 && -result < INT_MIN) return INT_MIN;
+
+            i++;
+        }
+
+        return static_cast<int>(sign * result);
     }
-
-    b *= a;
-    if (b > INT_MAX) return INT_MAX;
-    if (b < INT_MIN) return INT_MIN;
-    return static_cast<int>(b);
- }
-
 };
