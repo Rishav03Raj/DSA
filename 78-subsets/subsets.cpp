@@ -1,19 +1,18 @@
 class Solution {
 public:
     vector<vector<int>> subsets(vector<int>& nums) {
-        vector<vector<int>> st;
-        vector<int> ds;
-         f(nums,ds,st,0);
-         return st;
-    }
-    void f(vector<int>& nums,vector<int>& ds,vector<vector<int>> &st,int ind){
-        if(ind==nums.size()){
+        int n = nums.size();
+        int l = 1<<n;
+         vector<vector<int>> st;
+        for(int mask=0;mask<l;mask++){
+            vector<int> ds;
+            for(int i=0;i<n;i++){
+                if(mask & (1<<i)){
+                    ds.push_back(nums[i]);
+                }
+            }
             st.push_back(ds);
-            return ;
         }
-        ds.push_back(nums[ind]);
-        f(nums,ds,st,ind+1);
-        ds.pop_back();
-        f(nums,ds,st,ind+1);
+        return st;
     }
 };
