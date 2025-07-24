@@ -3,25 +3,25 @@ public:
     int minDistance(string s1, string s2) {
         int n1 = s1.length();
         int n2 = s2.length();
-        vector<vector<int>> dp(n1 + 1, vector<int>(n2 + 1, 0));
-        for (int i = 0; i <= n1; i++) {
-            dp[i][0] = i;
-        }
+        vector<int>prv (n2 + 1, 0),cur(n2+1,0);
+    
         for (int j = 0; j <= n2; j++) {
-            dp[0][j] = j;
+            prv[j] = j;
         }
         for (int i = 1; i <= n1; i++) {
+             cur[0] = i;
             for (int j = 1; j <= n2; j++) {
                 if (s1[i-1] == s2[j-1])
-                    dp[i][j] = dp[i - 1][j - 1];
+                   cur[j] = prv[j - 1];
                 else {
-                     dp[i][j] =
-                               1 + min(dp[i - 1][j],
-                                       min(dp[i][j - 1], dp[i - 1][j - 1]));
+                     cur[j] =
+                               1 + min(prv[j],
+                                       min(cur[j - 1], prv[j - 1]));
                 }
             }
+               prv = cur;
         }
-        return dp[n1][n2];
+        return prv[n2];
     }
 
         // int f(int i, int j, string s1, string s2, vector<vector<int>>& dp) {
