@@ -8,9 +8,10 @@ public:
 
         }
         // cout<<btor;
-        return f(n-1,btor,0,nums);
+        vector<vector<int>> dp(n+1,vector<int>(btor+1,-1));
+        return f(n-1,btor,0,nums,dp);
     }
-    int f(int i,int b,int s,vector<int>& nums){
+    int f(int i,int b,int s,vector<int>& nums,vector<vector<int>> &dp){
         if(i<0){
             if(s==b){
                 return 1;
@@ -19,8 +20,9 @@ public:
                 return 0;
             }
         }
-        int nottake = 0+f(i-1,b,s,nums);
-        int take = f(i-1,b,s|nums[i],nums);
-        return  nottake+take;
+        if(dp[i][s]!=-1) return dp[i][s];
+        int nottake = 0+f(i-1,b,s,nums,dp);
+        int take = f(i-1,b,s|nums[i],nums,dp);
+        return  dp[i][s]= nottake+take;
     }
 };
