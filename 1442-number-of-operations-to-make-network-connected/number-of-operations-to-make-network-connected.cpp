@@ -40,11 +40,11 @@ public:
             }
             unionSet(u,v); 
         }
-        set<int> s;
+        int s=0;
         for(int i=0;i<n;i++){
-            s.insert(findParent(i));
+           if(parent[i]==i) s++;
         }
-        if(s.size()-1<=cn) return s.size()-1;
+        if(s-1<=cn) return s-1;
         else return -1;
     }
 };
