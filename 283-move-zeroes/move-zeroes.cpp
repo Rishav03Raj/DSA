@@ -4,15 +4,15 @@ public:
         int n = nums.size();
         int i=0,j=0;
         while(j<n){
-            if(nums[j]==0){
-                j++;
-            }
-            else {
-                swap(nums[i],nums[j]);
+            if(nums[j]!=0){
+                nums[i]=nums[j];
                 i++;j++;
             }
-            
-
+            else {
+                j++;
+            }
         }
+       fill(nums.begin()+i,nums.end(),0);
+      
     }
 };
