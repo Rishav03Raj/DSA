@@ -1,9 +1,9 @@
 class Solution {
 public:
-    void update(vector<int>& BIT, int index, int val)
+    void update(vector<int>& BIT, int index)
 {
     while (index > 0) {
-        BIT[index] += val;
+        BIT[index] += 1;
         index -= index & (-index);
     }
 }
@@ -28,7 +28,7 @@ int reversePairs(vector<int>& nums)
     int count = 0;
     for (int i = 0; i < n; i++) {
         count += query(BITS, lower_bound(nums_copy.begin(), nums_copy.end(), 2LL * nums[i] + 1) - nums_copy.begin() + 1);
-        update(BITS, lower_bound(nums_copy.begin(), nums_copy.end(), nums[i]) - nums_copy.begin() + 1, 1);
+        update(BITS, lower_bound(nums_copy.begin(), nums_copy.end(), nums[i]) - nums_copy.begin() + 1);
     }
     return count;
 }
