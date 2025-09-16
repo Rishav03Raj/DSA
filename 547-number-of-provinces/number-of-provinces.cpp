@@ -1,43 +1,32 @@
 class Solution {
+    void dfs(int node,vector<vector<int>>& adj,vector<bool>& vis){
+        vis[node]=1;
+        for(auto i:adj[node]){
+            if(!vis[i]){
+                dfs(i,adj,vis);
+            }
+        }
+    }
 public:
-    int findCircleNum(vector<vector<int>>& isConnected) {
-       const int n = isConnected.size();
+    int findCircleNum(vector<vector<int>>& cn) {
+        int n = cn.size();
+        // int m = cn[0].size();
         vector<vector<int>> adj(n);
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i != j && isConnected[i][j] == 1) {
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(i!=j && cn[i][j]==1){
                     adj[i].push_back(j);
                 }
             }
         }
-        
-        // for(auto row:adj){
-        //     for(auto col:row){
-        //         cout<<col<<" ";
-        //     }
-        //     cout<<endl;
-        // }
-
-        vector<bool> visited(n, false);
-        queue<int> q;
-        int count = 0;
-        for (int i = 0; i < n; i++) {
-            if (!visited[i]) {
-                q.push(i);
-                count++;
-                visited[i] = true;
-                while (!q.empty()) {
-                    int node = q.front();
-                    q.pop();
-                    for (auto neigh : adj[node]) {
-                        if (!visited[neigh]) {
-                            q.push(neigh);
-                            visited[neigh]=true;
-                        }
-                    }
-                }
+        vector<bool> vis(n,false);
+        int cnt = 0;
+        for(int i=0;i<n;i++){
+            if(!vis[i]){
+            cnt++;
+            dfs(i,adj,vis);
             }
         }
-        return count;
+        return cnt;
     }
 };
