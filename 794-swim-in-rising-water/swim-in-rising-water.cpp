@@ -22,6 +22,7 @@ public:
             q.pop();
             if(u == n-1 && v== n-1){
                 mn_time = time;
+                break;
             }
             for(int i=0;i<4;i++){
                 int nx = u+dx[i];
